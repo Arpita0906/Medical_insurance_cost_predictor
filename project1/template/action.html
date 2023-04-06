@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="css/font-awesome.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="static/style.css" />
+
+	<title>Health Insurance Predictor</title>
+</head>
+<body>
+<header>
+<div class="navbar">
+<div class="logo">
+<a href="#">Health Insurance Predictor</a>
+</div>
+<ul class="links">
+<li><a href="/">Home</a></li>
+<li><a href="#">Services</a></li>
+<li><a href="contacts.html">Contact</a></li>
+</ul>
+<div class="toggle_btn">
+<i class="fa fa-solid fa-bars"></i>
+</div>
+</div>
+<div class="dropdown_menu">
+<li><a href="index.html">Home</a></li>
+<li><a href="#">Services</a></li>
+<li><a href="contacts.html">Contact</a></li>
+</div>
+
+</header>
+<main>
+    <div id="showData">
+        <div class="cselect">
+        <label >Your Age:</label>
+        <label >{{result[0]}}</label>
+        </div>
+        <div class="cselect">
+            <label >Your Gender:</label>
+            <label >{{result[1]}}</label>
+        </div>
+        <div class="cselect">
+            <label >Your BMI:</label>
+            <label >{{result[2]}}</label>
+        </div>
+        <div class="cselect">
+            <label >Number of Children:</label>
+            <label >{{result[3]}}</label>
+        </div>
+        <div class="cselect">
+            <label >Smoker:</label>
+            <label >{{result[4]}}</label>
+        </div>
+        <div class="cselect">
+            <label >Your Region:</label>
+            <label >{{result[5]}}</label>
+        </div>
+        <div class="cselect">
+            <label >Insurance Charges:</label>
+            <label >{{result[6]}}</label>
+        </div>
+            
+    </div>	
+</main>
+<script>
+            const toggleBtn = document.querySelector('.toggle_btn')
+            const toggleBtnIcon = document.querySelector('.toggle_btn i')
+
+
+            const dropDownMenu = document.querySelector('.dropdown_menu')
+		toggleBtn.onclick = function () {
+  			if (dropDownMenu.classList.contains('open')) {
+    				dropDownMenu.classList.remove("open");console.log(toggleBtnIcon)
+  			} else {
+    				dropDownMenu.classList.add("open");
+  				}
+				
+			const isOpen = dropDownMenu.classList.contains('open')
+                toggleBtnIcon.classList = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'
+		};
+</script>
+</body>
+</html>

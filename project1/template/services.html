@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="css/font-awesome.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="static/style.css" />
+
+	<title>Health Insurance Predictor</title>
+</head>
+<body>
+<header>
+<div class="navbar">
+<div class="logo">
+<a href="#">Health Insurance Predictor</a>
+</div>
+<ul class="links">
+<li><a href="/">Home</a></li>
+<li><a href="#">Services</a></li>
+<li><a href="contacts.html">Contact</a></li>
+</ul>
+<div class="toggle_btn">
+<i class="fa fa-solid fa-bars"></i>
+</div>
+</div>
+<div class="dropdown_menu">
+<li><a href="index.html">Home</a></li>
+<li><a href="#">Services</a></li>
+<li><a href="contacts.html">Contact</a></li>
+</div>
+</header>
+<main>
+<section id="hero">
+	<div class="form1">
+        <form action="/predict" method="post" accept-charset="utf-8" name="Modelform">
+            <div class="cselect">
+                <label for="age">Enter Your Age:</label>
+        <input id="age" name="age" type="number">
+    </div>
+        <div class="cselect">
+            <label for="gender">Select Your Gender:</label>
+            <select name="gender" id="gender">
+                <option value="0">Female</option>
+                <option value="1">Male</option>
+                <!--<option value="Other">Other</option>-->
+            </select>
+        </div>
+        <div class="cselect">
+            <label for="age">Enter Your BMI:</label>
+        <input id="bmi" name="bmi" type="number" step="any" >
+</div>
+<div class="cselect">
+    <label for="age">Number Of Children:</label>
+        <input id="noc" name="noc" type="number" >
+        </div>
+        <div class="cselect">
+            <label for="smoker">Are you a smoker?:</label>
+            <select name="smoker" id="smoker">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>            
+        </div>
+        <!--<input id="origin" type="text" placeholder="Your origin"><br>-->
+        
+        <div class="cselect">
+        <label for="origin">Choose your origin:</label>
+            <select name="origin" id="origin">
+                {% for reg in region %}
+                <option value="{{reg}}">{{reg}}</option>
+                {% endfor %}
+            </select>
+            </div><br>
+        
+        <button onclick="sendData()">check insurance charges</button>
+	</form>
+</div>
+
+</section>
+</main>
+<div>
+    <div class="col-12" style="text-align: center">
+        <h4><span id="prediction"></span></h4>
+    </div>
+</div>
+
+<script>
+            const toggleBtn = document.querySelector('.toggle_btn')
+            const toggleBtnIcon = document.querySelector('.toggle_btn i')
+
+
+            const dropDownMenu = document.querySelector('.dropdown_menu')
+		toggleBtn.onclick = function () {
+  			if (dropDownMenu.classList.contains('open')) {
+    				dropDownMenu.classList.remove("open");console.log(toggleBtnIcon)
+  			} else {
+    				dropDownMenu.classList.add("open");
+  				}
+				
+			const isOpen = dropDownMenu.classList.contains('open')
+                toggleBtnIcon.classList = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'
+		};
+        function dispData() {
+            window.localStorage.clear();
+            let age = document.getElementById("age").value;     
+            let gender= document.getElementById("gender").value; 
+            let bmi = document.getElementById("bmi").value; 
+            let noc = document.getElementById("noc").value; 
+            let smoker = document.getElementById("smoker").value; 
+            let origin = document.getElementById("origin").value;   
+            window.localStorage.setItem('age', age);
+            window.localStorage.setItem('gender', gender);
+            window.localStorage.setItem('bmi', bmi);
+            window.localStorage.setItem('noc', noc);
+            window.localStorage.setItem('smoker', smoker);
+            window.localStorage.setItem('origin', origin);
+            
+        };
+        function sendData(){
+        document.querySelector('form').addEventListener("submit",form_handler);
+
+        let fd=new FormData(document.querySelector('form'));
+
+        let xhr= new XMLHttpRequest({mozSystem: true});
+            alert("hello");
+        xhr.open('POST','/predict',true);
+        document.getElementById('prediction').innerHTML="Wait! Predicting Price.....";
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == XMLHttpRequest.DONE){
+                document.getElementById('prediction').innerHTML="Prediction: ₹"+xhr.responseText;
+
+            }
+        
+        };
+        xhr.onload= function(){};
+
+        xhr.send(fd);
+    }
+</script>
+
+</body>
+</html>
